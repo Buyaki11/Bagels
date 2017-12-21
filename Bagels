@@ -1,0 +1,150 @@
+import random
+
+def getnum():
+    """
+    Generates a random 3-digit number between 1 and 9
+    
+    Returns that number
+    """
+    
+    count = 0
+    maxguess = 7
+    guess = ''
+    #askuser = input("Do you want to play")
+    l = [1,2,3,4,5,6,7,8,9]
+    #f askuser == 'Y':
+    random.shuffle(l)
+    for n in range(3):
+        guess = guess + str(l[n])     
+    return guess
+        
+        
+def game():
+    """
+    Lets the player guess the computer's number
+    
+    Returns 'Fermi', 'Pico' or 'Bagels' depending on the digits guessed
+    """
+    count = 0
+    number = getnum()
+    askagain = input('Enter your guess')
+    while count < 7:
+        s = []
+        for i in range(min(len(number),(len(askagain)))):
+            if number == askagain:
+                return 'Fermi Fermi Fermi'
+            else:
+                if askagain[i] == number[i]:
+                    s.append('Fermi')
+                    count = count + 1
+                    
+                    b = s
+                    #askagain = input("what is your next guess")
+                elif askagain[i] in number:
+                    s.append('Pico')
+                    count = count + 1
+                    
+                    b = s
+                    #askagain = input("what is your next guess")
+        
+        if len(s) == 0:
+            count = count + 1
+            b = ['Bagels']
+            #askagain = input("what is your next guess")
+        print(b)
+        askagain = input("what is your next guess")
+        if count >= 7:
+            print("Ooops better luck next time. The number was " + str(number))
+        
+        
+def makeguess():
+    """
+    Lets the computer guess the player's number
+    
+    Returns the number guessed
+    """
+    
+    newguess = ''
+    myguess = getnum()
+    print(myguess)
+    newclue = input("What is the next clue?")
+    newint = str(random.randint(0,9))
+    if newclue == "Bagels":
+        for i in range(3):  
+            newguess = getnum()
+        print(newguess)
+        newclue = input("What is the next clue? ")      
+    while newclue == "Pico":
+                li = []
+                for i in str(myguess):
+                    li.append(i)
+                random.shuffle(li)
+                for j in range(3):
+                    newguess = newguess + str(li[j])
+                print(newguess)
+
+                newclue = input("what's your next clue?")
+    while newclue == "Fermi":
+            newlist = []
+            li = []
+            for i in str(newguess):
+                li.append(i)
+            random.shuffle(li)
+            newguess = newguess[:-1]
+            newint = str(random.randint(0,9))
+            
+            for j in range(1):
+                print('1', newguess)
+                print('li', li)
+                while ((newint)) in str(newguess):
+                    (newint) = str(random.randint(0,9))
+                newguess = newguess + newint
+                print(newguess)
+                newlist.append(newguess)
+                
+            for k in newlist:
+                random.shuffle(newlist)
+                print(k)
+
+            newclue = input("what's your next clue?")             
+    if newclue == "Pico Pico":
+        while newclue != "Fermi Fermi":
+            li = []
+            for i in str(myguess):
+                li.append(i)
+            random.shuffle(li)
+            for j in range(3):
+                newguess = newguess + str(li[j])
+                print(newguess)
+                
+            newclue = input("what's your next clue?")
+            continue
+    elif newclue == "Pico Pico Pico":
+        while newclue != "Fermi Fermi Fermi":
+            li = []
+            for i in str(myguess):
+                li.append(i)
+            random.shuffle(li)
+            for j in range(3):
+                newguess = newguess + str(li[j])
+                print(newguess)
+            newclue = input("what's your next clue?")
+            continue
+    return newguess
+
+def main():
+    ques = input("Bagels is a fun guessing game! Here is the set of rules:\
+    To play, you need to either choose or guess a 3-digit number. In this version, there may be NO zeros and digits may NOT be repeated. If you opt to guess and get the answer 'Bagels' it means none of the digits are in the number. 'Fermi' means one of the digits is right and is in the right place. 'Pico' means that it's in the number but the wrong place. The other cases are just combinations of these. To win, guess the number in less than 7 guesses. The computer is dumb and does not have a limited number of guesses. If you opt to choose, say 'Pico' or 'Fermi' or 'Bagels' or its combinations with spaces in between.\
+    Would you like to guess or choose?\
+        Type 'G' or 'C' respectively.")
+                  
+    if ques == "G":
+        game()
+    elif ques == "C":
+    
+        makeguess()
+    else:
+        getinst()
+          
+if __name__ == '__main__':
+    main()
